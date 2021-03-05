@@ -10,6 +10,17 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
+    <style>
+      #holder {
+        border: 10px dashed #ccc;
+        width: 300px;
+        height: 300px;
+        margin: 20px auto;
+      }
+      #holder.hover {
+        border: 10px dashed #333;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
@@ -67,6 +78,12 @@
             </button>
           </div>
         </div>
+        <div class="row">
+          <div class="col-sm">
+            <div id="holder"></div>
+            <p id="status">Drag and Drop</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -77,6 +94,8 @@
       const textArea = document.getElementById('url');
       let arrayOfLines = [];
       let newArray = [];
+      var holder = document.getElementById('holder'),
+        state = document.getElementById('status');
 
       const splitLine = () => {
         arrayOfLines = [];
@@ -128,6 +147,41 @@
       copy.addEventListener('click', copyClipboard);
       textArea.addEventListener('keyup', convertOnchange);
       convert.addEventListener('click', copyOnchange);
+
+      //-------------------------------DEV-------------------------------------------------
+
+      if (typeof window.FileReader === 'undefined') {
+        state.className = 'fail';
+      } else {
+        state.className = 'success';
+        state.innerHTML = 'Drop to .txt File';
+      }
+
+      holder.ondragover = function () {
+        this.className = 'hover';
+        return false;
+      };
+      holder.ondragend = function () {
+        this.className = '';
+        return false;
+      };
+      holder.ondrop = function (e) {
+        this.className = '';
+        e.preventDefault();
+
+        var file = e.dataTransfer.files[0],
+          reader = new FileReader();
+        reader.onload = function (event) {
+          console.log(event.target);
+          textArea.value = event.target.result;
+          setTimeout(convertOnchange, 50);
+        };
+        reader.readAsText(file);
+        setTimeout(splitLine, 100);
+        setTimeout(copyOnchange, 101);
+
+        return false;
+      };
     </script>
   </body>
 </html>
