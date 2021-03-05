@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="row">
+          <div class="col-sm">
+            <div class="mb-3">
+              <label for="exampleFormControlTextarea1" class="form-label"
+                >URL</label
+              >
+              <textarea class="form-control" id="url" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row align-content-center justify-content-center">
+          <div class="col-sm">
+            <div class="row justify-content-center">
+              <div class="col-12">
+                <button
+                  name="Convert"
+                  id="convert"
+                  type="submit"
+                  class="btn btn-lg btn-primary mb-3"
+                >
+                  Convert
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm">
+            <div class="mb-3">
+              <label for="exampleFormControlTextarea1" class="form-label"
+                >Encoded URLs</label
+              >
+              <textarea
+                class="form-control"
+                id="encodedUrl"
+                rows="3"
+                readonly
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm">
+            <button
+              name="Copy All"
+              id="copy"
+              type="submit"
+              class="btn btn-lg btn-danger mb-3"
+            >
+              Copy All
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const convert = document.getElementById('convert');
+      const copy = document.getElementById('copy');
+      const textNode = document.getElementById('encodedUrl');
+      const textArea = document.getElementById('url');
+      let arrayOfLines = [];
+      let newArray = [];
+
+      const splitLine = () => {
+        arrayOfLines = [];
+        arrayOfLines = textArea.value.split('\n');
+        newArray = [];
+        arrayOfLines.forEach((element) => {
+          newArray.push(encodeURI(element));
+        });
+        write(newArray, textNode);
+      };
+
+      const write = (Arr, txtArea) => {
+        let text = '';
+        Arr.forEach((element) => {
+          element === ''
+            ? element
+            : text === ''
+            ? (text = `${element}`)
+            : (text = `${text}\n${element}`);
+        });
+        txtArea.value = text;
+      };
+
+      const calculate = (area) => {
+        result = area.value.split('\n');
+        result = result.filter((item) => item !== '');
+        return result.length;
+      };
+
+      const count = (txtArea, btn) => {
+        let number = calculate(txtArea);
+        console.log(number);
+        btn.textContent = `${btn.name} (${number})`;
+      };
+
+      const copyClipboard = () => {
+        textNode.select();
+        textNode.setSelectionRange(0, 99999); /* For mobile devices */
+        document.execCommand('copy');
+      };
+      const convertOnchange = () => {
+        count(textArea, convert);
+      };
+      const copyOnchange = () => {
+        count(textNode, copy);
+      };
+
+      convert.addEventListener('click', splitLine);
+      copy.addEventListener('click', copyClipboard);
+      textArea.addEventListener('keyup', convertOnchange);
+      convert.addEventListener('click', copyOnchange);
+    </script>
+  </body>
+</html>
