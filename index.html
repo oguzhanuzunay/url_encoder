@@ -24,7 +24,7 @@
   </head>
   <body>
     <div class="container">
-      <div class="row">
+      <div class="row" id="url_encoder">
         <div class="row">
           <div class="col-sm">
             <div class="mb-3">
@@ -38,14 +38,27 @@
         <div class="row align-content-center justify-content-center">
           <div class="col-sm">
             <div class="row justify-content-center">
-              <div class="col-12">
+              <div class="btn-group" role="group">
                 <button
                   name="Convert"
                   id="convert"
                   type="submit"
-                  class="btn btn-lg btn-primary mb-3"
+                  class="btn btn-outline-primary"
                 >
                   Convert
+                </button>
+
+                <button
+                  class="btn btn-outline-primary"
+                  name="Sort"
+                  id="sort"
+                  type="submit"
+                >
+                  SKU Sort
+                </button>
+
+                <button class="btn btn-outline-primary" for="btncheck3">
+                  Checkbox 3
                 </button>
               </div>
             </div>
@@ -92,6 +105,9 @@
       const copy = document.getElementById('copy');
       const textNode = document.getElementById('encodedUrl');
       const textArea = document.getElementById('url');
+      const showEncoder = document.getElementById('url_encoder_button');
+      const SortButton = document.getElementById('sort');
+
       let arrayOfLines = [];
       let newArray = [];
       var holder = document.getElementById('holder'),
@@ -100,22 +116,54 @@
       const splitLine = () => {
         arrayOfLines = [];
         arrayOfLines = textArea.value.split('\n');
-        newArray = [];
-        arrayOfLines.forEach((element) => {
-          newArray.push(encodeURI(element));
-        });
-        write(newArray, textNode);
+        //console.log('step 1', arrayOfLines);
+        return arrayOfLines;
       };
 
+      const encodetoArray = (arr) => {
+        let newArr = [];
+        arr.forEach((element) => {
+          newArr.push(encodeURI(element));
+        });
+        console.log('step 2', newArr);
+        return newArr;
+      };
+
+      const sortSKU = () => {
+        let arr = splitLine();
+        let sku = '';
+        arr.map((value) => {
+          sku = sku + value + ';';
+        });
+
+        return sku;
+      };
+
+      const versusSKu = () => {
+        let arr = splitLine();
+      }
+
+      const showSKU = () => {
+        let sku = sortSKU();
+        write(sku, textNode);
+      };
+
+      const showUrl = () => {
+        let arr = splitLine();
+        let encodedarr = encodetoArray(arr);
+        write(encodedarr, textNode);
+      };
       const write = (Arr, txtArea) => {
         let text = '';
-        Arr.forEach((element) => {
-          element === ''
-            ? element
-            : text === ''
-            ? (text = `${element}`)
-            : (text = `${text}\n${element}`);
-        });
+        typeof Arr !== 'string'
+          ? Arr.forEach((element) => {
+              element === ''
+                ? element
+                : text === ''
+                ? (text = `${element}`)
+                : (text = `${text}\n${element}`);
+            })
+          : (text = Arr);
         txtArea.value = text;
       };
 
@@ -143,10 +191,11 @@
         count(textNode, copy);
       };
 
-      convert.addEventListener('click', splitLine);
+      convert.addEventListener('click', showUrl);
       copy.addEventListener('click', copyClipboard);
       textArea.addEventListener('keyup', convertOnchange);
       convert.addEventListener('click', copyOnchange);
+      SortButton.addEventListener('click', showSKU);
 
       //-------------------------------DEV-------------------------------------------------
 
@@ -177,11 +226,12 @@
           setTimeout(convertOnchange, 50);
         };
         reader.readAsText(file);
-        setTimeout(splitLine, 100);
-        setTimeout(copyOnchange, 101);
+        //setTimeout(splitLine, 100);
+        //setTimeout(copyOnchange, 101);
 
         return false;
       };
+      //--------------------------------------------------------------------------
     </script>
   </body>
 </html>
