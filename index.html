@@ -40,12 +40,12 @@
             <div class="row justify-content-center">
               <div class="btn-group" role="group">
                 <button
-                  name="Convert"
+                  name="URL Encode"
                   id="convert"
                   type="submit"
                   class="btn btn-outline-primary"
                 >
-                  Convert
+                  URL Encode
                 </button>
 
                 <button
@@ -54,11 +54,25 @@
                   id="sort"
                   type="submit"
                 >
-                  SKU Sort
+                  SKU ; SKU
                 </button>
 
-                <button class="btn btn-outline-primary" for="btncheck3">
-                  Checkbox 3
+                <button
+                  class="btn btn-outline-primary"
+                  name="SortComma"
+                  id="SortComma"
+                  type="submit"
+                >
+                  SKU , SKU
+                </button>
+
+                <button
+                  class="btn btn-outline-primary"
+                  id="deleteDublicate"
+                  name="Delete SKU Dublicates"
+                  for="btncheck3"
+                >
+                  Delete SKU Dublicates
                 </button>
               </div>
             </div>
@@ -107,6 +121,8 @@
       const textArea = document.getElementById('url');
       const showEncoder = document.getElementById('url_encoder_button');
       const SortButton = document.getElementById('sort');
+      const deleteDublicates = document.getElementById('deleteDublicate');
+      const sortbyCommaButton = document.getElementById('SortComma');
 
       let arrayOfLines = [];
       let newArray = [];
@@ -116,7 +132,6 @@
       const splitLine = () => {
         arrayOfLines = [];
         arrayOfLines = textArea.value.split('\n');
-        //console.log('step 1', arrayOfLines);
         return arrayOfLines;
       };
 
@@ -125,29 +140,44 @@
         arr.forEach((element) => {
           newArr.push(encodeURI(element));
         });
-        console.log('step 2', newArr);
         return newArr;
       };
 
-      const sortSKU = () => {
+      const sortSKU = (a) => {
         let arr = splitLine();
         let sku = '';
         arr.map((value) => {
-          sku = sku + value + ';';
+          sku = sku + value + a;
         });
 
         return sku;
       };
 
+      const delDuplicates = (array) =>
+        array.filter((item, index) => array.indexOf(item) === index);
+
       const versusSKu = () => {
         let arr = splitLine();
-      }
-
+      };
+      //-----------------------------------SKU ; SKU
       const showSKU = () => {
-        let sku = sortSKU();
+        let sku = sortSKU(';');
         write(sku, textNode);
       };
+      //------------------------------------ SKU , SKU
+      const showSKUComma = () => {
+        let sku = sortSKU(',');
+        write(sku, textNode);
+      };
+      //------------------------------------dublicate delete
+      const noDublicate = () => {
+        let arr = splitLine();
+        arr = delDuplicates(arr);
+        write(arr, textNode);
+        copyOnchange();
+      };
 
+      //---------------------------------------
       const showUrl = () => {
         let arr = splitLine();
         let encodedarr = encodetoArray(arr);
@@ -186,6 +216,7 @@
       };
       const convertOnchange = () => {
         count(textArea, convert);
+        count(textArea, deleteDublicates);
       };
       const copyOnchange = () => {
         count(textNode, copy);
@@ -196,6 +227,8 @@
       textArea.addEventListener('keyup', convertOnchange);
       convert.addEventListener('click', copyOnchange);
       SortButton.addEventListener('click', showSKU);
+      deleteDublicates.addEventListener('click', noDublicate);
+      sortbyCommaButton.addEventListener('click', showSKUComma);
 
       //-------------------------------DEV-------------------------------------------------
 
@@ -228,7 +261,6 @@
         reader.readAsText(file);
         //setTimeout(splitLine, 100);
         //setTimeout(copyOnchange, 101);
-
         return false;
       };
       //--------------------------------------------------------------------------
