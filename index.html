@@ -75,6 +75,34 @@
                   Delete SKU Dublicates
                 </button>
               </div>
+              <div class="btn-group m-2" role="group">
+                <button
+                  name='; EN ; " RU " ;'
+                  id="impex1"
+                  type="submit"
+                  class="btn btn-outline-dark"
+                >
+                  ; EN ; " RU " ;
+                </button>
+
+                <button
+                  class="btn btn-outline-dark"
+                  name='; EN ; " x1 x2 " ;'
+                  id="impex2"
+                  type="submit"
+                >
+                  ; EN ; " x1 x2 " ;
+                </button>
+
+                <button
+                  class="btn btn-outline-dark"
+                  name='; EN ; " x1 x2 " ;'
+                  id="impex3"
+                  type="submit"
+                >
+                  ; EN ; " x1 " ; " x2 ";
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -123,6 +151,9 @@
       const SortButton = document.getElementById('sort');
       const deleteDublicates = document.getElementById('deleteDublicate');
       const sortbyCommaButton = document.getElementById('SortComma');
+      const impex1 = document.getElementById('impex1');
+      const impex2 = document.getElementById('impex2');
+      const impex3 = document.getElementById('impex3');
 
       let arrayOfLines = [];
       let newArray = [];
@@ -159,7 +190,7 @@
       const versusSKu = () => {
         let arr = splitLine();
       };
-      //-----------------------------------SKU ; SKU
+      //----------------------------------- SKU ; SKU
       const showSKU = () => {
         let sku = sortSKU(';');
         write(sku, textNode);
@@ -169,15 +200,56 @@
         let sku = sortSKU(',');
         write(sku, textNode);
       };
-      //------------------------------------dublicate delete
+      //------------------------------------ dublicate delete
       const noDublicate = () => {
         let arr = splitLine();
         arr = delDuplicates(arr);
         write(arr, textNode);
         copyOnchange();
       };
-
+      //------------------------------------ Impex-1
+      const makeImpex1 = () => {
+        let arr = splitLine();
+        let impex = impexMaker(arr, 1);
+        console.log(impex);
+        write(impex, textNode);
+        copyOnchange();
+      };
+      //------------------------------------ Impex-2
+      const makeImpex2 = () => {
+        let arr = splitLine();
+        let impex = impexMaker(arr, 1);
+        console.log(impex);
+        write(impex, textNode);
+        copyOnchange();
+      };
+      //------------------------------------ Impex-3
+      const makeImpex3 = () => {
+        let arr = splitLine();
+        let impex = impexMaker(arr, 3);
+        console.log(impex);
+        write(impex, textNode);
+        copyOnchange();
+      };
       //---------------------------------------
+
+      const impexMaker = (arr, impexType) => {
+        let impex = arr.map((str) => {
+          str = str.split(/\t/);
+
+          if (impexType === 1) {
+            return (str = `;${str[0]};"${str[1]}${
+              str[2] ? ' ' + str[2] : ''
+            }";`);
+          } else {
+            str = `;${str[0]};"${str[1]}";"${str[1]}";`;
+          }
+        });
+        return impex;
+      };
+
+      //---------------------------------------------------------------
+
       const showUrl = () => {
         let arr = splitLine();
         let encodedarr = encodetoArray(arr);
@@ -185,6 +257,7 @@
       };
       const write = (Arr, txtArea) => {
         let text = '';
+        console.log(Arr);
         typeof Arr !== 'string'
           ? Arr.forEach((element) => {
               element === ''
@@ -228,7 +301,9 @@
       convert.addEventListener('click', copyOnchange);
       SortButton.addEventListener('click', showSKU);
       deleteDublicates.addEventListener('click', noDublicate);
-      sortbyCommaButton.addEventListener('click', showSKUComma);
+      impex1.addEventListener('click', makeImpex1);
+      impex2.addEventListener('click', makeImpex2);
+      impex3.addEventListener('click', makeImpex3);
 
       //-------------------------------DEV-------------------------------------------------
 
