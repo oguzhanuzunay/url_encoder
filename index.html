@@ -242,7 +242,7 @@
               str[2] ? ' ' + str[2] : ''
             }";`);
           } else {
-            str = `;${str[0]};"${str[1]}";"${str[1]}";`;
+            return (str = `;${str[0]};"${str[1]}";"${str[1]}";`);
           }
         });
         return impex;
