@@ -198,6 +198,7 @@
       //------------------------------------ SKU , SKU
       const showSKUComma = () => {
         let sku = sortSKU(',');
+        console.log(sku);
         write(sku, textNode);
       };
       //------------------------------------ dublicate delete
@@ -300,10 +301,11 @@
       convert.addEventListener('click', copyOnchange);
       SortButton.addEventListener('click', showSKU);
       deleteDublicates.addEventListener('click', noDublicate);
+      sortbyCommaButton.addEventListener('click', showSKUComma);
       impex1.addEventListener('click', makeImpex1);
       impex2.addEventListener('click', makeImpex2);
       impex3.addEventListener('click', makeImpex3);
-
+//
       //-------------------------------DEV-------------------------------------------------
 
       if (typeof window.FileReader === 'undefined') {
