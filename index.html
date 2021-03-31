@@ -211,7 +211,6 @@
       const makeImpex1 = () => {
         let arr = splitLine();
         let impex = impexMaker(arr, 1);
-        console.log(impex);
         write(impex, textNode);
         copyOnchange();
       };
@@ -219,7 +218,7 @@
       const makeImpex2 = () => {
         let arr = splitLine();
         let impex = impexMaker(arr, 1);
-        console.log(impex);
+
         write(impex, textNode);
         copyOnchange();
       };
@@ -227,7 +226,7 @@
       const makeImpex3 = () => {
         let arr = splitLine();
         let impex = impexMaker(arr, 3);
-        console.log(impex);
+
         write(impex, textNode);
         copyOnchange();
       };
@@ -257,7 +256,7 @@
       };
       const write = (Arr, txtArea) => {
         let text = '';
-        console.log(Arr);
+
         typeof Arr !== 'string'
           ? Arr.forEach((element) => {
               element === ''
@@ -278,7 +277,7 @@
 
       const count = (txtArea, btn) => {
         let number = calculate(txtArea);
-        console.log(number);
+
         btn.textContent = `${btn.name} (${number})`;
       };
 
