@@ -75,32 +75,75 @@
                   Delete SKU Dublicates
                 </button>
               </div>
-              <div class="btn-group m-2" role="group">
+              <div class="btn-group mt-2" role="group">
                 <button
-                  name='; EN ; " RU " ;'
+                  name='Category (;p_code;"p_name";)'
                   id="impex1"
                   type="submit"
-                  class="btn btn-outline-dark"
+                  class="btn btn-outline-dark impex1"
                 >
-                  ; EN ; " RU " ;
+                  Category (;p_code;"p_name";)
                 </button>
 
                 <button
                   class="btn btn-outline-dark"
-                  name='; EN ; " x1 x2 " ;'
+                  name=' Category Computed Title (;p_code; "p_name
+                  p_producttitletemplate";)'
                   id="impex2"
                   type="submit"
                 >
-                  ; EN ; " x1 x2 " ;
+                  Category Computed Title (;p_code; "p_name
+                  p_producttitletemplate";)
                 </button>
-
+                <button
+                  name='Classifaction Class (;p_code;"p_name";)'
+                  id="impex1"
+                  type="submit"
+                  class="btn btn-outline-dark impex1"
+                >
+                  Classifaction Class (;p_code;"p_name";)
+                </button>
                 <button
                   class="btn btn-outline-dark"
-                  name='; EN ; " x1 x2 " ;'
+                  name='Facet (;$solrIndexedType;p_name;"p_displayname";)'
+                  id="impex4"
+                  type="submit"
+                >
+                  Facet (;$solrIndexedType;p_name;"p_displayname";)
+                </button>
+              </div>
+              <div class="btn-group mt-2" role="group">
+                <button
+                  class="btn btn-outline-dark"
+                  name='Consumer Centric (;p_code;"p_title";"p_subtitle";)'
                   id="impex3"
                   type="submit"
                 >
-                  ; EN ; " x1 " ; " x2 ";
+                  Consumer Centric (;p_code;"p_title";"p_subtitle";)
+                </button>
+                <button
+                  name='Consumer Centric Range (;p_code;"p_title";)'
+                  id="impex1"
+                  type="submit"
+                  class="btn btn-outline-dark impex1"
+                >
+                  Consumer Centric Range (;p_code;"p_title";)
+                </button>
+                <button
+                  name='Attributes (;p_code;"p_name";)'
+                  id="impex1"
+                  type="submit"
+                  class="btn btn-outline-dark impex1"
+                >
+                  Attributes (;p_code;"p_name";)
+                </button>
+                <button
+                  name=';Attributes Values (;p_code;"p_name";)'
+                  id="impex1"
+                  type="submit"
+                  class="btn btn-outline-dark impex1"
+                >
+                  Attributes Values (;p_code;"p_name";)
                 </button>
               </div>
             </div>
@@ -151,9 +194,10 @@
       const SortButton = document.getElementById('sort');
       const deleteDublicates = document.getElementById('deleteDublicate');
       const sortbyCommaButton = document.getElementById('SortComma');
-      const impex1 = document.getElementById('impex1');
+      const impex1 = document.querySelectorAll('.impex1');
       const impex2 = document.getElementById('impex2');
       const impex3 = document.getElementById('impex3');
+      const impex4 = document.getElementById('impex4');
 
       let arrayOfLines = [];
       let newArray = [];
@@ -226,12 +270,19 @@
       //------------------------------------ Impex-3
       const makeImpex3 = () => {
         let arr = splitLine();
+        let impex = impexMaker(arr, 2);
+
+        write(impex, textNode);
+        copyOnchange();
+      };
+      //--------------------------------------- Impex-4
+      const makeImpex4 = () => {
+        let arr = splitLine();
         let impex = impexMaker(arr, 3);
 
         write(impex, textNode);
         copyOnchange();
       };
-      //---------------------------------------
 
       const impexMaker = (arr, impexType) => {
         let impex = arr.map((str) => {
@@ -241,8 +292,14 @@
             return (str = `;${str[0]};"${str[1]}${
               str[2] ? ' ' + str[2] : ''
             }";`);
-          } else {
-            return (str = `;${str[0]};"${str[1]}";"${str[2] ? str[2] : ''}";`);
+          } else if (impexType === 2) {
+            return (str = `;${str[0] ? str[0] : ''};"${
+              str[1] ? str[1] : ''
+            }";"${str[2] ? str[2] : ''}";`);
+          } else if (impexType === 3) {
+            return (str = `;$solrIndexedType;${str[0]};"${str[1]}${
+              str[2] ? ' ' + str[2] : ''
+            }";`);
           }
         });
         return impex;
@@ -284,8 +341,8 @@
 
       const copyClipboard = () => {
         textNode.select();
-        textNode.setSelectionRange(0, 99999); /* For mobile devices */
-        document.execCommand('copy');
+        //textNode.setSelectionRange(0, 9999999999999); /* For mobile devices */
+        setTimeout(() => document.execCommand('copy'), 300);
       };
       const convertOnchange = () => {
         count(textArea, convert);
@@ -302,10 +359,14 @@
       SortButton.addEventListener('click', showSKU);
       deleteDublicates.addEventListener('click', noDublicate);
       sortbyCommaButton.addEventListener('click', showSKUComma);
-      impex1.addEventListener('click', makeImpex1);
+      // impex1.addEventListener('click', makeImpex1);
       impex2.addEventListener('click', makeImpex2);
       impex3.addEventListener('click', makeImpex3);
-//
+      impex4.addEventListener('click', makeImpex4);
+      //----
+
+      impex1.forEach((button) => button.addEventListener('click', makeImpex1));
+
       //-------------------------------DEV-------------------------------------------------
 
       if (typeof window.FileReader === 'undefined') {
