@@ -3,7 +3,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Beko Global Tool</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -23,13 +23,50 @@
     </style>
   </head>
   <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand mx-5" href="#">
+        <img
+          src="https://www.beko.com/content/dam/selectyourcountry/images/frontend/facelift-2017/logo.svg"
+          width="64"
+          height="64"
+          class="d-inline-block align-top"
+          alt=""
+        />
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+        class="collapse navbar-collapse flex-row justify-content-center"
+        id="navbarNavAltMarkup"
+      >
+        <div class="navbar-nav w-75">
+          <a id="sku" class="nav-item text-danger h4 nav-link active" href="#"
+            >SKU</a
+          >
+          <a id="impex" class="nav-item h4 nav-link" href="#">Impex</a>
+          <a id="country" class="nav-item h4 nav-link disabled" href="#"
+            >(Country) Soon...</a
+          >
+        </div>
+      </div>
+    </nav>
+
     <div class="container">
       <div class="row" id="url_encoder">
-        <div class="row">
+        <div class="row mt-5">
           <div class="col-sm">
             <div class="mb-3">
               <label for="exampleFormControlTextarea1" class="form-label"
-                >URL</label
+                >Input</label
               >
               <textarea class="form-control" id="url" rows="3"></textarea>
             </div>
@@ -38,7 +75,7 @@
         <div class="row align-content-center justify-content-center">
           <div class="col-sm">
             <div class="row justify-content-center">
-              <div class="btn-group" role="group">
+              <div class="btn-group skus" role="group">
                 <button
                   name="URL Encode"
                   id="convert"
@@ -75,7 +112,7 @@
                   Delete SKU Dublicates
                 </button>
               </div>
-              <div class="btn-group mt-2" role="group">
+              <div class="btn-group mt-2 impexs" role="group">
                 <button
                   name='Category (;p_code;"p_name";)'
                   id="impex1"
@@ -112,7 +149,7 @@
                   Facet (;$solrIndexedType;p_name;"p_displayname";)
                 </button>
               </div>
-              <div class="btn-group mt-2" role="group">
+              <div class="btn-group mt-2 impexs" role="group">
                 <button
                   class="btn btn-outline-dark"
                   name='Consumer Centric (;p_code;"p_title";"p_subtitle";)'
@@ -146,14 +183,88 @@
                   Attributes Values (;p_code;"p_name";)
                 </button>
               </div>
+              <div class="mt-2 countrys row" role="group">
+                <div class="col-sm d-flex flex-row">
+                  <a href="#" target="_blank" id="countryFlagUrl">
+                    <img
+                      src=""
+                      class="rounded"
+                      id="countryFlag"
+                      width="300px"
+                      alt="flag"
+                      ss="https://www.elasticpath.com/sites/default/files/2020-05/CMS_Page_Adobe_Experience_Manager_Logo.png"
+                    />
+                  </a>
+                  <div class="d-flex p-2 flex-column">
+                    <div class="d-flex p-2 bd-highlight ms-4">
+                      <p class="fw-bold mx-2">
+                        Country Name :
+                        <span id="countryName" class="fw-normal"></span>
+                      </p>
+                      <p class="fw-bold mx-2">
+                        ISO Code :
+                        <span id="countryIso" class="fw-normal"></span>
+                      </p>
+                      <p class="fw-bold mx-2">
+                        Languge Code :
+                        <span id="countryLanguge" class="fw-normal"></span>
+                      </p>
+                    </div>
+                    <div class="d-flex p-2 bd-highlight ms-4">
+                      <p class="fw-bold mx-2">
+                        PATH :
+                        <span id="countryPath" class="fw-normal"></span>
+                      </p>
+                      <p class="fw-bold mx-2">
+                        URL :
+                        <a
+                          href="#"
+                          target="_blank"
+                          id="countryUrl"
+                          class="fw-normal"
+                        ></a>
+                      </p>
+                    </div>
+                    <div
+                      class="d-flex p-2 bd-highlight ms-4 justify-content-around"
+                    >
+                      <a
+                        href="https://author-arcelik-prod-65.adobecqms.net/sites.html/content"
+                        target="_blank"
+                        id="aemImage"
+                      >
+                        <img
+                          src="https://www.elasticpath.com/sites/default/files/2020-05/CMS_Page_Adobe_Experience_Manager_Logo.png"
+                          class="rounded"
+                          width="200px"
+                          alt="aem"
+                        />
+                      </a>
+                      <a
+                        href="https://hybris.arcelik.com/backoffice/login.zul"
+                        target="_blank"
+                        id="pcmImage"
+                        class=""
+                      >
+                        <img
+                          src="https://cdn.freelogovectors.net/wp-content/uploads/2018/05/sap-hybris-logo.png"
+                          class="rounded"
+                          width="200px"
+                          alt="pcmI"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row mt-5">
           <div class="col-sm">
             <div class="mb-3">
               <label for="exampleFormControlTextarea1" class="form-label"
-                >Encoded URLs</label
+                >Output</label
               >
               <textarea
                 class="form-control"
@@ -176,7 +287,7 @@
             </button>
           </div>
         </div>
-        <div class="row">
+        <div class="row skus">
           <div class="col-sm">
             <div id="holder"></div>
             <p id="status">Drag and Drop</p>
@@ -198,7 +309,61 @@
       const impex2 = document.getElementById('impex2');
       const impex3 = document.getElementById('impex3');
       const impex4 = document.getElementById('impex4');
+      const skusButtonGroup = document.querySelectorAll('.skus');
+      const impexButtonGroups = document.querySelectorAll('.impexs');
+      const countryButtonGroup = document.querySelectorAll('.countrys');
+      const showSkuButton = document.getElementById('sku');
+      const showImpexButton = document.getElementById('impex');
+      const showCountryButton = document.getElementById('country');
 
+      // Show and Hide Buttons
+      const ShowComponent = (componentName, displayStatus) => {
+        typeof componentName === 'object'
+          ? componentName.forEach(
+              (group) => (group.style.display = `${displayStatus}`)
+            )
+          : (componentName.style.display = `${displayStatus}`);
+      };
+      //------------------------------
+      const showSkuGroup = () => {
+        showSkuButton.classList = 'nav-item text-danger h4 nav-link active';
+        showImpexButton.classList = 'nav-item h5 nav-link ';
+        showCountryButton.classList = 'nav-item h5 nav-link disabled';
+
+        ShowComponent(skusButtonGroup, '');
+        ShowComponent(impexButtonGroups, 'none');
+        ShowComponent(countryButtonGroup, 'none');
+
+        ShowComponent([textArea, textNode, copy], '');
+        ShowComponent(document.querySelectorAll('.form-label'), '');
+      };
+      const showImpexGroup = () => {
+        showSkuButton.classList = 'nav-item h5 nav-link';
+        showImpexButton.classList = 'nav-item text-danger h4 nav-link active ';
+        showCountryButton.classList = 'nav-item h5 nav-link disabled';
+
+        ShowComponent(skusButtonGroup, 'none');
+        ShowComponent(impexButtonGroups, '');
+        ShowComponent(countryButtonGroup, 'none');
+
+        ShowComponent([textArea, textNode, copy], '');
+        ShowComponent(document.querySelectorAll('.form-label'), '');
+      };
+      const showCountryGroup = () => {
+        showSkuButton.classList = 'nav-item h5 nav-link';
+        showImpexButton.classList = 'nav-item h5 nav-link  ';
+        showCountryButton.classList = 'nav-item text-danger h4 nav-link active';
+
+        ShowComponent(skusButtonGroup, 'none');
+        ShowComponent(impexButtonGroups, 'none');
+        ShowComponent(countryButtonGroup, '');
+
+        ShowComponent([textArea, textNode, copy], 'none');
+        ShowComponent(document.querySelectorAll('.form-label'), 'none');
+      };
+      //-----------------------------------START PAGE
+      showSkuGroup();
+      //----------------------------------------------------------------
       let arrayOfLines = [];
       let newArray = [];
       var holder = document.getElementById('holder'),
@@ -359,14 +524,14 @@
       SortButton.addEventListener('click', showSKU);
       deleteDublicates.addEventListener('click', noDublicate);
       sortbyCommaButton.addEventListener('click', showSKUComma);
-      // impex1.addEventListener('click', makeImpex1);
+      impex1.forEach((button) => button.addEventListener('click', makeImpex1));
       impex2.addEventListener('click', makeImpex2);
       impex3.addEventListener('click', makeImpex3);
       impex4.addEventListener('click', makeImpex4);
       //----
-
-      impex1.forEach((button) => button.addEventListener('click', makeImpex1));
-
+      showCountryButton.addEventListener('click', showCountryGroup);
+      showSkuButton.addEventListener('click', showSkuGroup);
+      showImpexButton.addEventListener('click', showImpexGroup);
       //-------------------------------DEV-------------------------------------------------
 
       if (typeof window.FileReader === 'undefined') {
@@ -401,6 +566,52 @@
         return false;
       };
       //--------------------------------------------------------------------------
+
+      const getCountryByName = (name) => {
+        const url = `https://restcountries.eu/rest/v2/name/${name}`;
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => getCountryInfo(data));
+      };
+      const getCountryByISO = (iso) => {
+        const url = `https://restcountries.eu/rest/v2/name/${iso}`;
+      };
+
+      const getCountryInfo = (obj) => {
+        console.log(obj);
+        obj = obj[0];
+        const country = {
+          flag: obj.flag,
+          name: obj.name,
+          iso: obj.alpha2Code,
+          language: obj.languages[0].iso639_1,
+          path: '/' + obj.alpha2Code + '-' + obj.languages[0].iso639_1,
+          url: `https://www.beko.com/${obj.alpha2Code}-${obj.languages[0].iso639_1}`,
+        };
+        showCountryInfo(country);
+      };
+      const showCountryInfo = (country) => {
+        document.getElementById('countryFlag').src = country.flag;
+        document.getElementById(
+          'countryFlagUrl'
+        ).href = country.url.toLowerCase();
+        document.getElementById('countryName').innerHTML = country.name;
+        document.getElementById('countryIso').innerHTML = country.iso;
+        document.getElementById('countryLanguge').innerHTML = country.language;
+        document.getElementById('countryPath').innerHTML = country.path;
+        document.getElementById(
+          'countryUrl'
+        ).innerHTML = country.url.toLowerCase();
+        document.getElementById('countryUrl').href = country.url.toLowerCase();
+        document.getElementById(
+          'aemImage'
+        ).href = `https://author-arcelik-prod-65.adobecqms.net/sites.html/content/bekoglobal/${country.iso}/${country.language}`.toLowerCase();
+
+        //import Link https://author-arcelik-prod-65.adobecqms.net/mnt/overlay/commerce/gui/content/catalogs/properties.html?item=/content/catalogs/bekoglobal/es-es
+        //dam assets  https://author-arcelik-prod-65.adobecqms.net/assets.html/content/dam/angola-ao-aem/angola-ao-aemProductCatalog
+      };
+
+      getCountryByName('usa');
     </script>
   </body>
 </html>
