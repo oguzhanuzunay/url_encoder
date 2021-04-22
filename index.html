@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Beko Global Tool</title>
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+      integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
       crossorigin="anonymous"
     />
+
     <style>
       #holder {
         border: 10px dashed #ccc;
@@ -24,38 +25,40 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand mx-5" href="#">
-        <img
-          src="https://www.beko.com/content/dam/selectyourcountry/images/frontend/facelift-2017/logo.svg"
-          width="64"
-          height="64"
-          class="d-inline-block align-top"
-          alt=""
-        />
-      </a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div
-        class="collapse navbar-collapse flex-row justify-content-center"
-        id="navbarNavAltMarkup"
-      >
-        <div class="navbar-nav w-75">
-          <a id="sku" class="nav-item text-danger h4 nav-link active" href="#"
-            >SKU</a
-          >
-          <a id="impex" class="nav-item h4 nav-link" href="#">Impex</a>
-          <a id="country" class="nav-item h4 nav-link disabled" href="#"
-            >(Country) Soon...</a
-          >
+      <div class="container-fluid">
+        <a class="navbar-brand mx-5" href="#">
+          <img
+            src="https://www.beko.com/content/dam/selectyourcountry/images/frontend/facelift-2017/logo.svg"
+            width="64"
+            height="64"
+            class="d-inline-block align-top"
+            alt=""
+          />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="true"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="collapse navbar-collapse flex-row justify-content-center"
+          id="navbarNavAltMarkup"
+        >
+          <div class="navbar-nav w-75">
+            <a id="sku" class="nav-item text-danger h4 nav-link active" href="#"
+              >SKU</a
+            >
+            <a id="impex" class="nav-item h4 nav-link" href="#">Impex</a>
+            <a id="country" class="nav-item h4 nav-link disabled" href="#"
+              >(Country) Soon...</a
+            >
+          </div>
         </div>
       </div>
     </nav>
@@ -181,6 +184,17 @@
                   class="btn btn-outline-dark impex1"
                 >
                   Attributes Values (;p_code;"p_name";)
+                </button>
+              </div>
+              <div class="btn-group mt-2 impexs" role="group">
+                <button
+                  name=';Attributes Values (;p_code;"p_name";)'
+                  id="computedTitleMaker"
+                  type="submit"
+                  class="btn btn-outline-dark impex1"
+                >
+                  Computed Title Maker ( CaregoryID, Computed Title Set, L1, L1
+                  Tra, L2, L2 Tra, L3, L3 Tra)
                 </button>
               </div>
               <div class="mt-2 countrys row" role="group">
@@ -315,7 +329,9 @@
       const showSkuButton = document.getElementById('sku');
       const showImpexButton = document.getElementById('impex');
       const showCountryButton = document.getElementById('country');
+      const computedTitleMaker = document.getElementById('computedTitleMaker');
 
+      //--------------------------------
       // Show and Hide Buttons
       const ShowComponent = (componentName, displayStatus) => {
         typeof componentName === 'object'
@@ -362,7 +378,7 @@
         ShowComponent(document.querySelectorAll('.form-label'), 'none');
       };
       //-----------------------------------START PAGE
-      showSkuGroup();
+      showImpexGroup();
       //----------------------------------------------------------------
       let arrayOfLines = [];
       let newArray = [];
@@ -372,6 +388,7 @@
       const splitLine = () => {
         arrayOfLines = [];
         arrayOfLines = textArea.value.split('\n');
+        //console.log(arrayOfLines);
         return arrayOfLines;
       };
 
@@ -407,7 +424,6 @@
       //------------------------------------ SKU , SKU
       const showSKUComma = () => {
         let sku = sortSKU(',');
-        console.log(sku);
         write(sku, textNode);
       };
       //------------------------------------ dublicate delete
@@ -417,6 +433,7 @@
         write(arr, textNode);
         copyOnchange();
       };
+
       //------------------------------------ Impex-1
       const makeImpex1 = () => {
         let arr = splitLine();
@@ -444,29 +461,62 @@
       const makeImpex4 = () => {
         let arr = splitLine();
         let impex = impexMaker(arr, 3);
-
+        write(impex, textNode);
+        copyOnchange();
+      };
+      //--------------------------------------
+      const makeComputedTitle = () => {
+        let arr = splitLine();
+        let impex = impexMaker(arr, 5);
         write(impex, textNode);
         copyOnchange();
       };
 
       const impexMaker = (arr, impexType) => {
+        impexRule1 = (str) => {
+          return (str = `;${str[0]};"${str[1]}${str[2] ? ' ' + str[2] : ''}";`);
+        };
+        const spStr = `'') `;
+
+        const metricChanger = (value, static, elmnt1, elmnt2) => {
+          let res = '';
+          elmnt1 !== '-' || elmnt2 !== ''
+            ? (res = value.replace(`${static}${elmnt1}`, elmnt2))
+            : (res = value);
+          return res;
+        };
+
         let impex = arr.map((str) => {
           str = str.split(/\t/);
-
-          if (impexType === 1) {
-            return (str = `;${str[0]};"${str[1]}${
-              str[2] ? ' ' + str[2] : ''
-            }";`);
-          } else if (impexType === 2) {
-            return (str = `;${str[0] ? str[0] : ''};"${
-              str[1] ? str[1] : ''
-            }";"${str[2] ? str[2] : ''}";`);
-          } else if (impexType === 3) {
-            return (str = `;$solrIndexedType;${str[0]};"${str[1]}${
-              str[2] ? ' ' + str[2] : ''
-            }";`);
+          if (str.length === 1) {
+            return '';
+          } else {
+            if (impexType == 5) {
+              str[1] = str[1].replace(str[2], str[3]);
+              str[1] = metricChanger(str[1], spStr, str[4], str[5]);
+              str[1] = metricChanger(str[1], spStr, str[6], str[7]);
+              //  str[1] = str[1].replace(`${spStr}${str[4]}`, str[5]);
+              //  str[1] = str[1].replace(`${spStr}${str[6]}`, str[7]);
+              let result = [str[0], str[1]];
+              console.log(impexRule1(result));
+              return impexRule1(result);
+            }
+            if (impexType === 1) {
+              return (str = `;${str[0]};"${str[1]}${
+                str[2] ? ' ' + str[2] : ''
+              }";`);
+            } else if (impexType === 2) {
+              return (str = `;${str[0] ? str[0] : ''};"${
+                str[1] ? str[1] : ''
+              }";"${str[2] ? str[2] : ''}";`);
+            } else if (impexType === 3) {
+              return (str = `;$solrIndexedType;${str[0]};"${str[1]}${
+                str[2] ? ' ' + str[2] : ''
+              }";`);
+            }
           }
         });
+
         return impex;
       };
 
@@ -528,6 +578,7 @@
       impex2.addEventListener('click', makeImpex2);
       impex3.addEventListener('click', makeImpex3);
       impex4.addEventListener('click', makeImpex4);
+      computedTitleMaker.addEventListener('click', makeComputedTitle);
       //----
       showCountryButton.addEventListener('click', showCountryGroup);
       showSkuButton.addEventListener('click', showSkuGroup);
@@ -556,7 +607,6 @@
         var file = e.dataTransfer.files[0],
           reader = new FileReader();
         reader.onload = function (event) {
-          console.log(event.target);
           textArea.value = event.target.result;
           setTimeout(convertOnchange, 50);
         };
@@ -578,7 +628,6 @@
       };
 
       const getCountryInfo = (obj) => {
-        console.log(obj);
         obj = obj[0];
         const country = {
           flag: obj.flag,
@@ -613,5 +662,15 @@
 
       getCountryByName('usa');
     </script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+      integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
