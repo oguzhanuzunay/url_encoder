@@ -353,6 +353,15 @@
                           class="fw-normal"
                         ></a>
                       </p>
+                      <p class="fw-bold mx-2">
+                        Prod :
+                        <a
+                          href="#"
+                          target="_blank"
+                          id="countryProd"
+                          class="fw-normal"
+                        ></a>
+                      </p>
                     </div>
                     <div
                       class="d-flex p-2 bd-highlight ms-4 justify-content-around"
@@ -1249,6 +1258,7 @@
           language: obj.languages[0].iso639_1,
           path: '/' + obj.alpha2Code + '-' + obj.languages[0].iso639_1,
           url: `https://www.beko.com/${obj.alpha2Code}-${obj.languages[0].iso639_1}`,
+          prod: `https://beko-com-prod-65.adobecqms.net/${obj.alpha2Code}-${obj.languages[0].iso639_1}`,
         };
         showCountryInfo(country);
         setTimeout(endLoadingAnimation, 500);
@@ -1266,6 +1276,12 @@
           'countryUrl'
         ).innerHTML = country.url.toLowerCase();
         document.getElementById('countryUrl').href = country.url.toLowerCase();
+        document.getElementById(
+          'countryProd'
+        ).href = country.prod.toLowerCase();
+        document.getElementById(
+          'countryProd'
+        ).innerHTML = country.prod.toLowerCase();
         document.getElementById(
           'aemImage'
         ).href = `https://author-arcelik-prod-65.adobecqms.net/sites.html/content/bekoglobal/${country.iso}`.toLowerCase();
