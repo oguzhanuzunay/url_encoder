@@ -566,7 +566,7 @@ UPDATE ClassificationAttributeValue; code[unique = true]; name[lang = $lang]; $c
 
 `;
         } else if (type === 'classification') {
-          str = `$classCatalogVersion = catalogversion(catalog(id[default = '${catalog}-aemClassificationSystem']), version[default = '1.0'])[unique = true, default = 'new-zealand-nz-aemClassificationSystem:1.0']
+          str = `$classCatalogVersion = catalogversion(catalog(id[default = '${catalog}-aemClassificationSystem']), version[default = '1.0'])[unique = true, default = '${catalog}-aemClassificationSystem:1.0']
 $lang = ${languge}
 
 UPDATE ClassificationClass; code[unique = true]; name[lang = $lang];$classCatalogVersion
