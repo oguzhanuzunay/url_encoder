@@ -512,8 +512,10 @@
 
       const splitLine = () => {
         arrayOfLines = [];
-        textArea.value = textArea.value.replace('\n* ', '* ');
+        textArea.value = textArea.value.replaceAll('\n* ', '* ');
+        console.log(textArea.value);
         arrayOfLines = textArea.value.split('\n');
+        console.table(arrayOfLines);
         return arrayOfLines;
       };
 
@@ -720,7 +722,7 @@
                 while (str[i].includes('"')) {
                   str[i] = str[i].replace('"', '');
                 }
-                console.log(str[i]);
+                //-  console.log(str[i]);
               }
 
               //str.map((elm) => console.log(elm));
