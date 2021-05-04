@@ -139,6 +139,15 @@
 
                 <button
                   class="btn btn-outline-primary"
+                  name="sortForQueryButton"
+                  id="sortForQueryButton"
+                  type="submit"
+                >
+                  'SKU' , 'SKU'
+                </button>
+
+                <button
+                  class="btn btn-outline-primary"
                   id="deleteDublicate"
                   name="Delete SKU Dublicates"
                   for="btncheck3"
@@ -513,9 +522,8 @@
       const splitLine = () => {
         arrayOfLines = [];
         textArea.value = textArea.value.replaceAll('\n* ', '* ');
-        console.log(textArea.value);
+        //console.log(textArea.value);
         arrayOfLines = textArea.value.split('\n');
-        console.table(arrayOfLines);
         return arrayOfLines;
       };
 
@@ -537,6 +545,16 @@
         return sku;
       };
 
+      const sortForQuery = () => {
+        let arr = splitLine();
+        let sku = '';
+        arr.map((value) => {
+          sku = sku + "'" + value + "'" + ',';
+        });
+        console.log(sku);
+        return sku;
+      };
+
       const delDuplicates = (array) =>
         array.filter((item, index) => array.indexOf(item) === index);
 
@@ -553,6 +571,13 @@
         let sku = sortSKU(',');
         write(sku, textNode);
       };
+
+      //-------------------------------------- 'sku','sku'
+      const showSKUQuery = () => {
+        let sku = sortForQuery();
+        write(sku, textNode);
+      };
+
       //------------------------------------ dublicate delete
       const noDublicate = () => {
         let arr = splitLine();
@@ -826,6 +851,9 @@
       SortButton.addEventListener('click', showSKU);
       deleteDublicates.addEventListener('click', noDublicate);
       sortbyCommaButton.addEventListener('click', showSKUComma);
+      document
+        .getElementById('sortForQueryButton')
+        .addEventListener('click', showSKUQuery);
       impex1.forEach((button) =>
         button.addEventListener('click', (e) =>
           makeImpex1(
