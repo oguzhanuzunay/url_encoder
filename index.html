@@ -547,10 +547,16 @@
 
       const sortForQuery = () => {
         let arr = splitLine();
-        let sku = '';
+        let sku = `SELECT {P:Code},{C:Code} FROM {Product as P
+JOIN CategoryProductRelation as REL ON {P:PK} = {REL:Target}
+JOIN Category AS C ON {REL:Source} = {C:PK}
+JOIN CatalogVersion as CV on {CV:PK} = {C:CatalogVersion}
+JOIN Catalog as CAT on {CAT:PK} = {CV:Catalog}
+} WHERE {CV:Version} ='Staged' AND {CAT:ID}='bekoGlobalTemplateProductCatalog' AND {P:Code} IN (`;
         arr.map((value) => {
           sku = sku + "'" + value + "'" + ',';
         });
+        sku = sku + ')';
         console.log(sku);
         return sku;
       };
