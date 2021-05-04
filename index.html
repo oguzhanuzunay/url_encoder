@@ -1304,7 +1304,9 @@ JOIN Catalog as CAT on {CAT:PK} = {CV:Catalog}
         document.getElementById(
           'countryFlagUrl'
         ).href = country.url.toLowerCase();
-        document.getElementById('countryName').innerHTML = country.name;
+        document.getElementById(
+          'countryName'
+        ).innerHTML = country.name.toLowerCase();
         document.getElementById('countryIso').innerHTML = country.iso;
         document.getElementById('countryLanguge').innerHTML = country.language;
         document.getElementById('countryPath').innerHTML = country.path;
