@@ -548,11 +548,11 @@
       const sortForQuery = () => {
         let arr = splitLine();
         let sku = `SELECT {P:Code},{C:Code} FROM {Product as P
-JOIN CategoryProductRelation as REL ON {P:PK} = {REL:Target}
-JOIN Category AS C ON {REL:Source} = {C:PK}
-JOIN CatalogVersion as CV on {CV:PK} = {C:CatalogVersion}
-JOIN Catalog as CAT on {CAT:PK} = {CV:Catalog}
-} WHERE {CV:Version} ='Staged' AND {CAT:ID}='bekoGlobalTemplateProductCatalog' AND {P:Code} IN (`;
+      JOIN CategoryProductRelation as REL ON {P:PK} = {REL:Target}
+      JOIN Category AS C ON {REL:Source} = {C:PK}
+      JOIN CatalogVersion as CV on {CV:PK} = {C:CatalogVersion}
+      JOIN Catalog as CAT on {CAT:PK} = {CV:Catalog}
+      } WHERE {CV:Version} ='Staged' AND {CAT:ID}='bekoGlobalTemplateProductCatalog' AND {P:Code} IN (`;
         arr.map((value) => {
           sku = sku + "'" + value + "'" + ',';
         });
@@ -597,78 +597,78 @@ JOIN Catalog as CAT on {CAT:PK} = {CV:Catalog}
         let str = '';
         if (type === 'categories') {
           str = `$productCatalog = ${catalog}-aemProductCatalog
-      $productCatalogVersion = Staged
-      $catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default=$productCatalogVersion])[unique=true,default=$productCatalog:$productCatalogVersion]
-      $lang = ${languge}
+            $productCatalogVersion = Staged
+            $catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default=$productCatalogVersion])[unique=true,default=$productCatalog:$productCatalogVersion]
+            $lang = ${languge}
 
-      UPDATE Category;code[unique=true];name[lang = $lang];$catalogVersion
-
-      `;
-        } else if (type === 'att') {
-          str = `$classSystemVersion = systemVersion(catalog(id[default = '${catalog}-aemClassificationSystem']), version[default = '1.0'])[unique = true]
-      $lang = ${languge}
-
-       UPDATE ClassificationAttribute; code[unique = true]; name[lang = $lang]; $classSystemVersion
+            UPDATE Category;code[unique=true];name[lang = $lang];$catalogVersion
 
             `;
+        } else if (type === 'att') {
+          str = `$classSystemVersion = systemVersion(catalog(id[default = '${catalog}-aemClassificationSystem']), version[default = '1.0'])[unique = true]
+            $lang = ${languge}
+
+             UPDATE ClassificationAttribute; code[unique = true]; name[lang = $lang]; $classSystemVersion
+
+                  `;
         } else if (type === 'att_val') {
           str = `$classSystemVersion = systemVersion(catalog(id[default = '${catalog}-aemClassificationSystem']), version[default = '1.0'])[unique = true]
-      $lang = ${languge}
+            $lang = ${languge}
 
-      UPDATE ClassificationAttributeValue; code[unique = true]; name[lang = $lang]; $classSystemVersion
+            UPDATE ClassificationAttributeValue; code[unique = true]; name[lang = $lang]; $classSystemVersion
 
-      `;
+            `;
         } else if (type === 'classification') {
           str = `$classCatalogVersion = catalogversion(catalog(id[default = '${catalog}-aemClassificationSystem']), version[default = '1.0'])[unique = true, default = '${catalog}-aemClassificationSystem:1.0']
-      $lang = ${languge}
+            $lang = ${languge}
 
-      UPDATE ClassificationClass; code[unique = true]; name[lang = $lang];$classCatalogVersion
+            UPDATE ClassificationClass; code[unique = true]; name[lang = $lang];$classCatalogVersion
 
-      `;
+            `;
         } else if (type === 'computed_title') {
           str = `$productCatalogName         =   ${catalog}-aemProductCatalog
-      $productCatalogVersionName  =   Staged
-      $productCatalogVersion      =   catalogVersion(catalog(id[default=$productCatalogName]),version[default=$productCatalogVersionName])[unique=true,default=$productCatalogName:$productCatalogVersionName]
-      $lang = ${languge}
+            $productCatalogVersionName  =   Staged
+            $productCatalogVersion      =   catalogVersion(catalog(id[default=$productCatalogName]),version[default=$productCatalogVersionName])[unique=true,default=$productCatalogName:$productCatalogVersionName]
+            $lang = ${languge}
 
-      UPDATE Category;code[unique=true];productTitleTemplate[lang = $lang];$productCatalogVersion
+            UPDATE Category;code[unique=true];productTitleTemplate[lang = $lang];$productCatalogVersion
 
-      `;
+            `;
         } else if (type === 'cons_cent') {
           str = `$catalogVersion=catalogVersion(catalog(id[default='${catalog}-aemProductCatalog']),version[default='Staged'])[unique=true,default='${catalog}-aemProductCatalog:Staged']
-      $lang = ${languge}
+            $lang = ${languge}
 
-      UPDATE QuickInfo; code[unique = true]; title[lang = $lang];subtitle[lang = $lang];$catalogVersion
+            UPDATE QuickInfo; code[unique = true]; title[lang = $lang];subtitle[lang = $lang];$catalogVersion
 
-      `;
+            `;
         } else if (type === 'cons_cent_range') {
           str = `$catalogVersion=catalogVersion(catalog(id[default='${catalog}-aemProductCatalog']),version[default='Staged'])[unique=true,default='${catalog}-aemProductCatalog:Staged']
-      $lang = ${languge}
+            $lang = ${languge}
 
-      UPDATE QuickInfoRange; code[unique = true]; title[lang = $lang];$catalogVersion
+            UPDATE QuickInfoRange; code[unique = true]; title[lang = $lang];$catalogVersion
 
-      `;
+            `;
         } else if (type === 'facet') {
           str = `
-      $solrIndexedType = ${catalog}-aemProduct
+            $solrIndexedType = ${catalog}-aemProduct
 
-      # Language
-      $lang=${languge}
+            # Language
+            $lang=${languge}
 
-      # Solr Indexed Property
-      UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];displayName[lang=$lang]
+            # Solr Indexed Property
+            UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];displayName[lang=$lang]
 
-      `;
+            `;
         } else if (type === 'technology') {
           str = `$productCatalogName         =   ${catalog}-aemProductCatalog
-      $productCatalogVersionName  =   Staged
-      $productCatalogVersion      =   catalogVersion(catalog(id[default=$productCatalogName]),version[default=$productCatalogVersionName])[unique=true,default=$productCatalogName:$productCatalogVersionName]
-      $lang = ${languge}
+            $productCatalogVersionName  =   Staged
+            $productCatalogVersion      =   catalogVersion(catalog(id[default=$productCatalogName]),version[default=$productCatalogVersionName])[unique=true,default=$productCatalogName:$productCatalogVersionName]
+            $lang = ${languge}
 
-      #code,name,loong desc,short desc,plp desc,
-      UPDATE Technology; code[unique = true];name[lang = $lang];description[lang = $lang];text[lang = $lang];plpdescription[lang = $lang];$productCatalogVersion
+            #code,name,loong desc,short desc,plp desc,
+            UPDATE Technology; code[unique = true];name[lang = $lang];description[lang = $lang];text[lang = $lang];plpdescription[lang = $lang];$productCatalogVersion
 
-      `;
+            `;
         }
 
         return str;
@@ -737,7 +737,7 @@ JOIN Catalog as CAT on {CAT:PK} = {CV:Catalog}
         const metricChanger = (value, static, elmnt1, elmnt2) => {
           let res = '';
           elmnt1 !== '-' || elmnt2 !== ''
-            ? (res = value.replace(`${static}${elmnt1}`, elmnt2))
+            ? (res = value.replace(`${static}${elmnt1}`, `${static}${elmnt2}`))
             : (res = value);
           return res;
         };
@@ -779,10 +779,15 @@ JOIN Catalog as CAT on {CAT:PK} = {CV:Catalog}
             }
             if (impexType == 5) {
               str[1] = str[1].replace(str[2], str[3]);
+              console.log('1 :', str[1]);
               str[1] = metricChanger(str[1], spStr, str[4], str[5]);
+              console.log('2 :', str[1]);
               str[1] = metricChanger(str[1], spStr, str[6], str[7]);
+              console.log('3 :', str[1]);
               let result = [str[0], str[1]];
-              //console.log(impexRule1(result));
+
+              console.log(impexRule1(result));
+
               return impexRule1(result);
             }
             if (impexType === 1) {
@@ -943,7 +948,7 @@ JOIN Catalog as CAT on {CAT:PK} = {CV:Catalog}
 
       function autocomplete(inp, arr) {
         /*the autocomplete function takes two arguments,
-                  the text field element and an array of possible autocompleted values:*/
+                        the text field element and an array of possible autocompleted values:*/
         var currentFocus;
         /*execute a function when someone writes in the text field:*/
         inp.addEventListener('input', function (e) {
@@ -983,7 +988,7 @@ JOIN Catalog as CAT on {CAT:PK} = {CV:Catalog}
                 inp.value = this.getElementsByTagName('input')[0].value;
                 getCountryByName(inp.value);
                 /*close the list of autocompleted values,
-                              (or any other open lists of autocompleted values:*/
+                                    (or any other open lists of autocompleted values:*/
                 closeAllLists();
               });
               a.appendChild(b);
@@ -996,14 +1001,14 @@ JOIN Catalog as CAT on {CAT:PK} = {CV:Catalog}
           if (x) x = x.getElementsByTagName('div');
           if (e.keyCode == 40) {
             /*If the arrow DOWN key is pressed,
-                        increase the currentFocus variable:*/
+                              increase the currentFocus variable:*/
             currentFocus++;
             /*and and make the current item more visible:*/
             addActive(x);
           } else if (e.keyCode == 38) {
             //up
             /*If the arrow UP key is pressed,
-                        decrease the currentFocus variable:*/
+                              decrease the currentFocus variable:*/
             currentFocus--;
             /*and and make the current item more visible:*/
             addActive(x);
@@ -1034,7 +1039,7 @@ JOIN Catalog as CAT on {CAT:PK} = {CV:Catalog}
         }
         function closeAllLists(elmnt) {
           /*close all autocomplete lists in the document,
-                    except the one passed as an argument:*/
+                          except the one passed as an argument:*/
           var x = document.getElementsByClassName('autocomplete-items');
           for (var i = 0; i < x.length; i++) {
             if (elmnt != x[i] && elmnt != inp) {
