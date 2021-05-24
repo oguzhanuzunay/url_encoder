@@ -373,7 +373,13 @@
                       </p>
                     </div>
                     <div
-                      class="d-flex p-2 bd-highlight ms-4 justify-content-around"
+                      class="
+                        d-flex
+                        p-2
+                        bd-highlight
+                        ms-4
+                        justify-content-around
+                      "
                     >
                       <a
                         href="https://author-arcelik-prod-65.adobecqms.net/sites.html/content"
@@ -597,78 +603,78 @@
         let str = '';
         if (type === 'categories') {
           str = `$productCatalog = ${catalog}-aemProductCatalog
-            $productCatalogVersion = Staged
-            $catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default=$productCatalogVersion])[unique=true,default=$productCatalog:$productCatalogVersion]
-            $lang = ${languge}
+$productCatalogVersion = Staged
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default=$productCatalogVersion])[unique=true,default=$productCatalog:$productCatalogVersion]
+$lang = ${languge}
 
-            UPDATE Category;code[unique=true];name[lang = $lang];$catalogVersion
+UPDATE Category;code[unique=true];name[lang = $lang];$catalogVersion
 
-            `;
+`;
         } else if (type === 'att') {
           str = `$classSystemVersion = systemVersion(catalog(id[default = '${catalog}-aemClassificationSystem']), version[default = '1.0'])[unique = true]
-            $lang = ${languge}
+$lang = ${languge}
 
-             UPDATE ClassificationAttribute; code[unique = true]; name[lang = $lang]; $classSystemVersion
+UPDATE ClassificationAttribute; code[unique = true]; name[lang = $lang]; $classSystemVersion
 
-                  `;
+`;
         } else if (type === 'att_val') {
           str = `$classSystemVersion = systemVersion(catalog(id[default = '${catalog}-aemClassificationSystem']), version[default = '1.0'])[unique = true]
-            $lang = ${languge}
+$lang = ${languge}
 
-            UPDATE ClassificationAttributeValue; code[unique = true]; name[lang = $lang]; $classSystemVersion
+UPDATE ClassificationAttributeValue; code[unique = true]; name[lang = $lang]; $classSystemVersion
 
-            `;
+`;
         } else if (type === 'classification') {
           str = `$classCatalogVersion = catalogversion(catalog(id[default = '${catalog}-aemClassificationSystem']), version[default = '1.0'])[unique = true, default = '${catalog}-aemClassificationSystem:1.0']
-            $lang = ${languge}
+$lang = ${languge}
 
-            UPDATE ClassificationClass; code[unique = true]; name[lang = $lang];$classCatalogVersion
+UPDATE ClassificationClass; code[unique = true]; name[lang = $lang];$classCatalogVersion
 
-            `;
+`;
         } else if (type === 'computed_title') {
           str = `$productCatalogName         =   ${catalog}-aemProductCatalog
-            $productCatalogVersionName  =   Staged
-            $productCatalogVersion      =   catalogVersion(catalog(id[default=$productCatalogName]),version[default=$productCatalogVersionName])[unique=true,default=$productCatalogName:$productCatalogVersionName]
-            $lang = ${languge}
+$productCatalogVersionName  =   Staged
+$productCatalogVersion      =   catalogVersion(catalog(id[default=$productCatalogName]),version[default=$productCatalogVersionName])[unique=true,default=$productCatalogName:$productCatalogVersionName]
+$lang = ${languge}
 
-            UPDATE Category;code[unique=true];productTitleTemplate[lang = $lang];$productCatalogVersion
+UPDATE Category;code[unique=true];productTitleTemplate[lang = $lang];$productCatalogVersion
 
-            `;
+`;
         } else if (type === 'cons_cent') {
           str = `$catalogVersion=catalogVersion(catalog(id[default='${catalog}-aemProductCatalog']),version[default='Staged'])[unique=true,default='${catalog}-aemProductCatalog:Staged']
-            $lang = ${languge}
+$lang = ${languge}
 
-            UPDATE QuickInfo; code[unique = true]; title[lang = $lang];subtitle[lang = $lang];$catalogVersion
+UPDATE QuickInfo; code[unique = true]; title[lang = $lang];subtitle[lang = $lang];$catalogVersion
 
-            `;
+`;
         } else if (type === 'cons_cent_range') {
           str = `$catalogVersion=catalogVersion(catalog(id[default='${catalog}-aemProductCatalog']),version[default='Staged'])[unique=true,default='${catalog}-aemProductCatalog:Staged']
-            $lang = ${languge}
+$lang = ${languge}
 
-            UPDATE QuickInfoRange; code[unique = true]; title[lang = $lang];$catalogVersion
+UPDATE QuickInfoRange; code[unique = true]; title[lang = $lang];$catalogVersion
 
-            `;
+`;
         } else if (type === 'facet') {
           str = `
-            $solrIndexedType = ${catalog}-aemProduct
+$solrIndexedType = ${catalog}-aemProduct
 
-            # Language
-            $lang=${languge}
+# Language
+$lang=${languge}
 
-            # Solr Indexed Property
-            UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];displayName[lang=$lang]
+# Solr Indexed Property
+UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];displayName[lang=$lang]
 
-            `;
+`;
         } else if (type === 'technology') {
           str = `$productCatalogName         =   ${catalog}-aemProductCatalog
-            $productCatalogVersionName  =   Staged
-            $productCatalogVersion      =   catalogVersion(catalog(id[default=$productCatalogName]),version[default=$productCatalogVersionName])[unique=true,default=$productCatalogName:$productCatalogVersionName]
-            $lang = ${languge}
+$productCatalogVersionName  =   Staged
+$productCatalogVersion      =   catalogVersion(catalog(id[default=$productCatalogName]),version[default=$productCatalogVersionName])[unique=true,default=$productCatalogName:$productCatalogVersionName]
+$lang = ${languge}
 
-            #code,name,loong desc,short desc,plp desc,
-            UPDATE Technology; code[unique = true];name[lang = $lang];description[lang = $lang];text[lang = $lang];plpdescription[lang = $lang];$productCatalogVersion
+#code,name,loong desc,short desc,plp desc,
+UPDATE Technology; code[unique = true];name[lang = $lang];description[lang = $lang];text[lang = $lang];plpdescription[lang = $lang];$productCatalogVersion
 
-            `;
+`;
         }
 
         return str;
@@ -1306,28 +1312,22 @@
       };
       const showCountryInfo = (country) => {
         document.getElementById('countryFlag').src = country.flag;
-        document.getElementById(
-          'countryFlagUrl'
-        ).href = country.url.toLowerCase();
-        document.getElementById(
-          'countryName'
-        ).innerHTML = country.name.toLowerCase();
+        document.getElementById('countryFlagUrl').href =
+          country.url.toLowerCase();
+        document.getElementById('countryName').innerHTML =
+          country.name.toLowerCase();
         document.getElementById('countryIso').innerHTML = country.iso;
         document.getElementById('countryLanguge').innerHTML = country.language;
         document.getElementById('countryPath').innerHTML = country.path;
-        document.getElementById(
-          'countryUrl'
-        ).innerHTML = country.url.toLowerCase();
+        document.getElementById('countryUrl').innerHTML =
+          country.url.toLowerCase();
         document.getElementById('countryUrl').href = country.url.toLowerCase();
-        document.getElementById(
-          'countryProd'
-        ).href = country.prod.toLowerCase();
-        document.getElementById(
-          'countryProd'
-        ).innerHTML = country.prod.toLowerCase();
-        document.getElementById(
-          'aemImage'
-        ).href = `https://author-arcelik-prod-65.adobecqms.net/sites.html/content/bekoglobal/${country.iso}`.toLowerCase();
+        document.getElementById('countryProd').href =
+          country.prod.toLowerCase();
+        document.getElementById('countryProd').innerHTML =
+          country.prod.toLowerCase();
+        document.getElementById('aemImage').href =
+          `https://author-arcelik-prod-65.adobecqms.net/sites.html/content/bekoglobal/${country.iso}`.toLowerCase();
 
         //import Link https://author-arcelik-prod-65.adobecqms.net/mnt/overlay/commerce/gui/content/catalogs/properties.html?item=/content/catalogs/bekoglobal/es-es
         //dam assets  https://author-arcelik-prod-65.adobecqms.net/assets.html/content/dam/angola-ao-aem/angola-ao-aemProductCatalog
